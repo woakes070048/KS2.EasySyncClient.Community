@@ -9,7 +9,7 @@ The software is made in C#.
 
 It has been fully tested on Windows and being validated for MacOs.
 
-The software is based on :
+The software is using on :
   - dotCMIS library -> https://chemistry.apache.org/dotnet/dotcmis.html
   - DynamicLogViewer -> http://tringi.trimcore.cz/Dynamic_Log_Viewer
   - SQLite -> https://www.sqlite.org/
