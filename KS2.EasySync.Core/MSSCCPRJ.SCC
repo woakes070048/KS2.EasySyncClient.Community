@@ -1,5 +1,0 @@
-SCC = This is a source code control file
-
-[KS2.EasySync.Core.csproj]
-SCC_Aux_Path = http://10.10.20.34/VaultService|:7
-SCC_Project_Name = $/EasySyncClient/KS2.EasySync.Core
