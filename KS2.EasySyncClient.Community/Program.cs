@@ -73,7 +73,6 @@ namespace KS2.EasySyncClient
         private static List<RepositoryUI> ListOfRepositoryUI = new List<RepositoryUI>();
         private static Int32 NumberOfStartedEngines = 0;
         private static StatsForm Stats;
-        private static Thread ProductUpdateThread;
 
         //usage : Program.RessourceManager.GetString("SERVICE_UNAVAILABLE")
         //to change culture : Thread.CurrentThread.CurrentUICulture = ci;
@@ -375,15 +374,6 @@ namespace KS2.EasySyncClient
 
         private static void QuitApplication()
         {
-            if (ProductUpdateThread != null && ProductUpdateThread.ThreadState == System.Threading.ThreadState.Running)
-            {
-                try
-                {
-                    ProductUpdateThread.Abort();
-                }
-                catch{}
-            }
-
             if (NumberOfStartedEngines > 0)
             {
                 foreach (RepositoryUI RUI in ListOfRepositoryUI)
