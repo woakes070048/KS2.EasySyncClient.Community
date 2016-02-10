@@ -12,3 +12,5 @@ The software is using :
   - DynamicLogViewer -> http://tringi.trimcore.cz/Dynamic_Log_Viewer
   - SQLite -> https://www.sqlite.org/
   - Mono (for the MacOs version) -> http://www.mono-project.com/
+
+For more information : http://ks2.fr/produits/ks2-easysync-client-en/
