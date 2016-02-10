@@ -1,0 +1,6 @@
+D:\Users\fkaram\Documents\Visual Studio 2012\Projects\KaliSync\DotCMIS\bin\Debug\DotCMIS.dll.config
+D:\Users\fkaram\Documents\Visual Studio 2012\Projects\KaliSync\DotCMIS\bin\Debug\DotCMIS.XML
+D:\Users\fkaram\Documents\Visual Studio 2012\Projects\KaliSync\DotCMIS\bin\Debug\DotCMIS.dll
+D:\Users\fkaram\Documents\Visual Studio 2012\Projects\KaliSync\DotCMIS\bin\Debug\DotCMIS.pdb
+D:\Users\fkaram\Documents\Visual Studio 2012\Projects\KaliSync\DotCMIS\obj\Debug\DotCMIS.dll
+D:\Users\fkaram\Documents\Visual Studio 2012\Projects\KaliSync\DotCMIS\obj\Debug\DotCMIS.pdb

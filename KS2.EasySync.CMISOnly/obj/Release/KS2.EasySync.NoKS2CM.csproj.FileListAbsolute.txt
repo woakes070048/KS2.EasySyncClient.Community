@@ -1,0 +1,5 @@
+C:\Users\fkaram\Documents\Visual Studio 2012\Projects\EasySync\KS2.EasySyncClient\bin\Release\KS2.EasySync.CMISOnly.dll
+C:\Users\fkaram\Documents\Visual Studio 2012\Projects\EasySync\KS2.EasySyncClient\bin\Release\KS2.EasySync.CMISOnly.pdb
+C:\Users\fkaram\Documents\Visual Studio 2012\Projects\EasySync\KS2.EasySync.CMISOnly\obj\Release\KS2.EasySync.NoKS2CM.csprojResolveAssemblyReference.cache
+C:\Users\fkaram\Documents\Visual Studio 2012\Projects\EasySync\KS2.EasySync.CMISOnly\obj\Release\KS2.EasySync.CMISOnly.dll
+C:\Users\fkaram\Documents\Visual Studio 2012\Projects\EasySync\KS2.EasySync.CMISOnly\obj\Release\KS2.EasySync.CMISOnly.pdb

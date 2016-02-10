@@ -1,0 +1,2 @@
+C:\Users\fkaram\Documents\Visual Studio 2012\Projects\EasySync\KS2.EasySyncClient\bin\Debug\KS2.EasySync.CMISOnly.dll
+C:\Users\fkaram\Documents\Visual Studio 2012\Projects\EasySync\KS2.EasySyncClient\bin\Debug\KS2.EasySync.CMISOnly.pdb
