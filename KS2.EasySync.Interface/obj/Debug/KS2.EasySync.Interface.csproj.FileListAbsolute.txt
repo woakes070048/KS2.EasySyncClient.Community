@@ -1,8 +1,0 @@
-D:\Users\fkaram\Documents\Visual Studio 2012\Projects\KaliSync\KS2.EasySync.Interface\bin\Debug\KS2.EasySync.Interface.dll
-D:\Users\fkaram\Documents\Visual Studio 2012\Projects\KaliSync\KS2.EasySync.Interface\bin\Debug\KS2.EasySync.Interface.pdb
-D:\Users\fkaram\Documents\Visual Studio 2012\Projects\KaliSync\KS2.EasySync.Interface\obj\Debug\KS2.EasySync.Interface.dll
-D:\Users\fkaram\Documents\Visual Studio 2012\Projects\KaliSync\KS2.EasySync.Interface\obj\Debug\KS2.EasySync.Interface.pdb
-D:\Users\fkaram\Documents\Visual Studio 2012\Projects\EasySync\KS2.EasySync.Interface\bin\Debug\KS2.EasySync.Interface.dll
-D:\Users\fkaram\Documents\Visual Studio 2012\Projects\EasySync\KS2.EasySync.Interface\bin\Debug\KS2.EasySync.Interface.pdb
-D:\Users\fkaram\Documents\Visual Studio 2012\Projects\EasySync\KS2.EasySync.Interface\obj\Debug\KS2.EasySync.Interface.dll
-D:\Users\fkaram\Documents\Visual Studio 2012\Projects\EasySync\KS2.EasySync.Interface\obj\Debug\KS2.EasySync.Interface.pdb
