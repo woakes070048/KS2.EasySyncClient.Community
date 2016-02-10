@@ -3,7 +3,7 @@ A Dropbox® equivalent for Alfresco ECM
 
 This sofware extend Alfresco ECM with offline sync capabilities similar to what Dropbox / SkyDrive / etc... do.
 
-The software is made in C#.
+The software is made in C# and requires .NET Framework 4.5.2 to run on Windows.
 
 It has been fully tested on Windows and being validated for MacOs.
 
