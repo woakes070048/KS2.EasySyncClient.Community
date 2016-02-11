@@ -21,4 +21,4 @@ For more information : http://ks2.fr/produits/ks2-easysync-client-en/
 3 - You will be prompted to enter your Alfresco's credential as well a your Alfresco's CMIS endpoint URL (this URL is http://YOUR_ALFRESO_SERVER_NAME_OR_IP/alfresco/cmisatom) <br/>
 4 - Select the site you want to synchronize<br/>
 5 - Select the local folder on your workstation where to synchonize<br/>
-6 - That's it !<br/>
+6 - That's it ! You're syncing !
