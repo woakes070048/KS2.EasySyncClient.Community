@@ -474,31 +474,21 @@ namespace KS2.EasySync.Core
 
                     #region Local Element has been created
 
-                    if (SEI.LocalElementId.Equals(Guid.Empty)) //L'élement n'est pas encore connu du VirtualFolder
-                    {
-                        LogDispatchEvent(String.Format("[EVENT][{0}][{1}] Element path : {2}", SEI.SyncEventId, SEI.SyncEvent.ToString(), SEI.ActualEntityPathFull));
 
-                        TempRelativePath = GetRelativeElementPath(SEI.ActualEntityPathFull);
-                        TempParentPath = Tools.GetParentPath(TempRelativePath);
+					LogDispatchEvent(String.Format("[EVENT][{0}][{1}] Element path : {2}", SEI.SyncEventId, SEI.SyncEvent.ToString(), SEI.ActualEntityPathFull));
 
-                        if (SEI.IsDirectoryEvent) TempLocalElement = (VirtualElement)new VirtualFolder(TempRelativePath);
-                        else TempLocalElement = (VirtualElement)new VirtualFile(TempRelativePath);
+					TempRelativePath = GetRelativeElementPath(SEI.ActualEntityPathFull);
+					TempParentPath = Tools.GetParentPath(TempRelativePath);
 
-                        TempParentFolder = _VirtualRootFolder.FlatElementsGetElementBasedOnPath(TempParentPath, VirtualElementType.Folder, false);
+					if (SEI.IsDirectoryEvent) TempLocalElement = (VirtualElement)new VirtualFolder(TempRelativePath);
+					else TempLocalElement = (VirtualElement)new VirtualFile(TempRelativePath);
 
-                        //If there is already an element having the same path => return
-                        if (TempParentFolder.GetDirectSubElementByPath(TempRelativePath, false) != null) return;
+					TempParentFolder = _VirtualRootFolder.FlatElementsGetElementBasedOnPath(TempParentPath, VirtualElementType.Folder, false);
 
-                        TempParentFolder.SubElementAdd(TempLocalElement);
-                    }
-                    else
-                    {
-                        //Est-ce que cela peut encore arriver ?????
-                        LogDispatchEvent("Code obsolete 1");
-                        LogDispatchEvent(String.Format("[EVENT][{0}][{1}] Element Id : {2}", SEI.SyncEventId, SEI.SyncEvent.ToString(), SEI.LocalElementId));
-                        //If the original action was postponed, the folder is already created, we do not create it twice
-                        TempLocalElement = _VirtualRootFolder.FlatElementsGetElementBasedOnId(SEI.LocalElementId, SEI.IsDirectoryEvent ? VirtualElementType.Folder : VirtualElementType.File, false);
-                    }
+					//If there is already an element having the same path => return
+					if (TempParentFolder.GetDirectSubElementByPath(TempRelativePath, false) != null) return;
+
+					TempParentFolder.SubElementAdd(TempLocalElement);
 
                     _VirtualRootFolder.FlatElementAdd(TempLocalElement);
 
@@ -1436,6 +1426,11 @@ namespace KS2.EasySync.Core
                                 {
                                     LogActionThread(String.Format("[{0}][{1}] Cancelled", SAI.ActionItemId, SAI.Action));
                                     NotifyUploadDownloadCompletion = true;
+                                    if (SAI.Action == SyncActionEnum.FileDownloadNew)
+                                    {
+                                        VirtualFolder_DeleteFile(FileToProcess, Task.CurrentId);
+                                        return;
+                                    }
                                 }
                                 else
                                 {

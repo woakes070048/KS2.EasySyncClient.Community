@@ -57,6 +57,8 @@ namespace KS2.EasySync.Core
         /// <returns></returns>
         public override bool Equals(object obj)
         {
+			if (!obj.GetType().Equals(typeof(SyncActionItem))) return false;
+					
             SyncActionItem objToCompare = (SyncActionItem)obj;
 
             if (StringParameter == null && RemoteElementParameter == null)
