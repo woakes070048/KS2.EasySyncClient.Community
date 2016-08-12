@@ -1,5 +1,5 @@
 # EasySyncClient
-A Dropbox-liket for Alfresco ECM
+A Dropbox-like for Alfresco ECM
 
 This sofware extend Alfresco ECM with offline sync capabilities similar to what Dropbox / SkyDrive / etc... do.
 
