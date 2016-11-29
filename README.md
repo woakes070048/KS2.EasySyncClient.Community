@@ -1,7 +1,7 @@
 # EasySyncClient
 A Dropbox-like for Alfresco ECM
 
-This sofware extend Alfresco ECM with offline sync capabilities similar to what Dropbox / SkyDrive / etc... do.
+This sofware extend Alfresco ECM with offline sync capabilities similar to what Dropbox / OneDrive / etc... do.
 
 The software is made in C# and requires .NET Framework 4.5.2 to run on Windows.
 

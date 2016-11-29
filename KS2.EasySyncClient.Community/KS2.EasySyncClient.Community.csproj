@@ -397,10 +397,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KS2.EasySync.CMISOnly\KS2.EasySync.NoKS2CM.csproj">
-      <Project>{be3997cf-1ddc-4d69-8163-06d38fc05055}</Project>
-      <Name>KS2.EasySync.NoKS2CM</Name>
-    </ProjectReference>
     <ProjectReference Include="..\KS2.EasySync.Core\KS2.EasySync.Core.csproj">
       <Project>{e2e07a7a-edb5-4a93-827f-c947ac457df4}</Project>
       <Name>KS2.EasySync.Core</Name>
