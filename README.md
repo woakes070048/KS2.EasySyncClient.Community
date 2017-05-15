@@ -16,7 +16,7 @@ The software is using :
 For more information : http://ks2.fr/produits/ks2-easysync-client-en/
 
 #How does it work<br/>
-1 - Donwload the latest release<br/>
+1 - Download the latest release<br/>
 2 - Run Easysyncclient.exe<br/>
 3 - You will be prompted to enter your Alfresco's credential as well a your Alfresco's CMIS endpoint URL (this URL is http://YOUR_ALFRESO_SERVER_NAME_OR_IP/alfresco/cmisatom) <br/>
 4 - Select the site you want to synchronize<br/>
