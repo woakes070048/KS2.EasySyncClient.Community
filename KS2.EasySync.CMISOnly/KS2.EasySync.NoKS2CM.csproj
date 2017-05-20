@@ -73,7 +73,7 @@
     <ProjectReference Include="..\DotCMIS\DotCMIS.csproj">
       <Project>{529ef90f-a34c-4426-a4f9-65113ac23841}</Project>
       <Name>DotCMIS</Name>
-      <Private>False</Private>
+      <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\KS2.EasySync.Core\KS2.EasySync.Core.csproj">
       <Project>{e2e07a7a-edb5-4a93-827f-c947ac457df4}</Project>
@@ -82,6 +82,9 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /y /d  "$(ProjectDir)$(OutDir)*.dll" "$(SolutionDir)KS2.EasySyncClient.Community\$(OutDir)"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
