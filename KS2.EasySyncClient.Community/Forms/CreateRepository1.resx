@@ -129,13 +129,13 @@
     <value>22, 15</value>
   </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 18</value>
+    <value>146, 18</value>
   </data>
   <data name="label2.TabIndex" type="System.Int32, mscorlib">
     <value>18</value>
   </data>
   <data name="label2.Text" xml:space="preserve">
-    <value>Enter your KS² Credentials</value>
+    <value>Enter your Credentials</value>
   </data>
   <data name="&gt;&gt;label2.Name" xml:space="preserve">
     <value>label2</value>
