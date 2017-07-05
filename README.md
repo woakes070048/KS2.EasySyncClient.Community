@@ -19,7 +19,11 @@ For more information : http://ks2.fr/produits/ks2-easysync-client-en/
 #How does it work<br/>
 1 - Download the latest release<br/>
 2 - Run Easysyncclient.exe<br/>
-3 - You will be prompted to enter your Alfresco's credential as well a your Alfresco's CMIS endpoint URL (this URL is http://YOUR_ALFRESCO_SERVER_NAME_OR_IP/alfresco/cmisatom) <br/>
+3 - You will be prompted to enter your Alfresco's credential as well a your Alfresco's CMIS endpoint URL. You have 3 choices depending on your version of Alfresco : 
+	-> http://<hostname>:<port>/alfresco/cmisatom<br/>
+	-> http://<hostname>:<port>/alfresco/api/-default-/public/cmis/versions/1.0/atom<br/>
+	-> http://<hostname>:<port>/alfresco/api/-default-/public/cmis/versions/1.1/atom<br/>
+
 4 - Select the site you want to synchronize<br/>
 5 - Select the local folder on your workstation where to synchonize<br/>
 6 - That's it ! You're syncing !
