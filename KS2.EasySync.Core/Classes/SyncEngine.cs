@@ -59,8 +59,8 @@ namespace KS2.EasySync.Core
 
         public VirtualRootFolder _VirtualRootFolder;
 
-        private IKaliSyncPlugin _RemoteConnector;
-        public IKaliSyncPlugin RemoteConnector
+        private IEasySyncPlugin _RemoteConnector;
+        public IEasySyncPlugin RemoteConnector
         {
             get
             {
@@ -245,7 +245,7 @@ namespace KS2.EasySync.Core
             }
 
             logger.Trace("Init connector ...");
-            this._RemoteConnector = (IKaliSyncPlugin)Activator.CreateInstance(t);
+            this._RemoteConnector = (IEasySyncPlugin)Activator.CreateInstance(t);
             this._RemoteConnector.Init(remoteRepositoryParameters);
             this._RemoteConnector.LinkToEngine(this, this._InstanceID);
             this._RemoteConnector.LogOutput += new LogEventHandler(delegate(object sender, string s) { LogActionThread(s); });
@@ -2087,7 +2087,7 @@ namespace KS2.EasySync.Core
         {
             if (e.Error != null)
             {
-                logger.ErrorException("Orchestrator has stopped", e.Error);
+                logger.Error(e.Error, "Orchestrator has stopped");
                 Orchestrator.RunWorkerAsync(); //Restart the worker
             }
 
@@ -2188,7 +2188,7 @@ namespace KS2.EasySync.Core
                     File.Move(GetFullElementPath(pVirtualFile.PathRelative), NewLocationPathFull);
                     pVirtualFile.CurrentName = Path.GetFileName(NewLocationPathFull);
                 }
-                catch (Exception ex)
+                catch
                 {
                     _SyncFileSystemWatcher.IgnoreEventRemove(SEII.SyncEventId);
 
@@ -2504,7 +2504,7 @@ namespace KS2.EasySync.Core
                         VirtualElement_Move(pVirtualElement, GetRelativeElementPath(NewElementPathFull));
                         VirtualElement_Serialize(pVirtualElement);
                     }
-                    catch (Exception ex)
+                    catch
                     {
                         _SyncFileSystemWatcher.IgnoreEventRemove(SAI.SyncEventId);
 

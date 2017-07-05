@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace KS2.EasySync.Core
 {
-    public interface IKaliSyncPlugin
+    public interface IEasySyncPlugin
     {
         event EventHandler AuthenticationError;
         event EventHandler ProxyError;
