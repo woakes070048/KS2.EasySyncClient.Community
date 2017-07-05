@@ -133,7 +133,7 @@ namespace KS2.EasySync.Core
                 stream = fInfo.Open(System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.None);
                 return true;
             }
-            catch (Exception ex)
+            catch
             {
                 return false;
             }
@@ -262,7 +262,7 @@ namespace KS2.EasySync.Core
                 }
                 catch (Exception ex)
                 {
-                    logger.DebugException(String.Format("In GetParentPath - Invalid Path : [{0}]", ElementPath), ex);
+                    logger.Debug(ex, String.Format("In GetParentPath - Invalid Path : [{0}]", ElementPath));
                     ParentPath = "";
                 }
             }

@@ -20,7 +20,7 @@ using DotCMIS.Data.Impl;
 #if __MonoCS__
 	using System.IO;
 #else
-    using Alphaleonis.Win32.Filesystem;
+using Alphaleonis.Win32.Filesystem;
 #endif
 using System.IO.Compression;
 using System.Globalization;
@@ -34,9 +34,9 @@ using DotCMIS.Data.Extensions;
 
 //http://chemistry.apache.org/java/examples/example-connect-dotnet.html
 
-namespace KS2.EasySync.NoKS2CM
+namespace KS2.EasySync.CMISOnly
 {
-    public class Connector : IKaliSyncPlugin
+    public class Connector : IEasySyncPlugin
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
@@ -50,7 +50,7 @@ namespace KS2.EasySync.NoKS2CM
         private bool IsLockedForCreation;
 
         private const Int32 LOCK_WAIT_TIME = 20; //Delay in second to wait for a file to be unlocked
-        
+
         private Guid _InstanceId;
         private IPluginHost _Host;
 
@@ -159,7 +159,7 @@ namespace KS2.EasySync.NoKS2CM
 
             if (session == null && !GetServiceSession(ref session, ref SiteDocumentLibraryFolderId)) return ActionResult.Retry;
 
-            Log("KaliSyncCMIS - GetFileList Started");
+            Log("KS2.EasySync.CMISOnly - GetFileList Started");
 
             foreach (var Element in session.Query(@"SELECT alfcmis:nodeRef,cmis:path,cmis:name FROM cmis:folder WHERE IN_TREE('" + SiteDocumentLibraryFolderId + "')", false).ToList())
             {
@@ -173,7 +173,7 @@ namespace KS2.EasySync.NoKS2CM
                 RepositoryFileList.Add(r);
             }
 
-            Log(String.Format("KaliSyncCMIS - GetFileList Folder : {0} elements", RepositoryFileList.Count()));
+            Log(String.Format("KS2.EasySync.CMISOnly - GetFileList Folder : {0} elements", RepositoryFileList.Count()));
 
             foreach (var Element in session.Query(@"SELECT alfcmis:nodeRef,cmis:name,cmis:lastModificationDate FROM cmis:document WHERE IN_TREE('" + SiteDocumentLibraryFolderId + "')", false).ToList())
             {
@@ -193,7 +193,7 @@ namespace KS2.EasySync.NoKS2CM
                 }
             }
 
-            Log(String.Format("KaliSyncCMIS - GetFileList End. {0} elements", RepositoryFileList.Count()));
+            Log(String.Format("KS2.EasySync.CMISOnly - GetFileList End. {0} elements", RepositoryFileList.Count()));
 
             RepositoryFileList.Sort((x, y) => x.PathRelative.Count(z => z == Path.DirectorySeparatorChar).CompareTo(y.PathRelative.Count(z => z == Path.DirectorySeparatorChar)));
 
@@ -254,7 +254,7 @@ namespace KS2.EasySync.NoKS2CM
             }
             catch (DotCMIS.Exceptions.CmisObjectNotFoundException ex)
             {
-                logger.ErrorException("In RenameRepositoryFile", ex);
+                logger.Error(ex, "In RenameRepositoryFile");
                 logger.Error(ex.StackTrace);
                 logger.Error("Param pVirtualFile : " + Newtonsoft.Json.JsonConvert.SerializeObject(pVirtualFile));
                 logger.Error("Param SAI : " + Newtonsoft.Json.JsonConvert.SerializeObject(SAI));
@@ -262,7 +262,7 @@ namespace KS2.EasySync.NoKS2CM
             }
             catch (Exception ex)
             {
-                logger.ErrorException("In RenameRepositoryFile", ex);
+                logger.Error(ex, "In RenameRepositoryFile");
                 logger.Error(ex.StackTrace);
                 logger.Error("Param pVirtualFile : " + Newtonsoft.Json.JsonConvert.SerializeObject(pVirtualFile));
                 logger.Error("Param SAI : " + Newtonsoft.Json.JsonConvert.SerializeObject(SAI));
@@ -316,7 +316,7 @@ namespace KS2.EasySync.NoKS2CM
                     }
                     catch (DotCMIS.Exceptions.CmisObjectNotFoundException ex)
                     {
-                        logger.ErrorException("In MoveRepositoryFile", ex);
+                        logger.Error(ex, "In MoveRepositoryFile");
                         //Parent dos not exist anymore
                         try { session.Clear(); }
                         catch { }
@@ -324,7 +324,7 @@ namespace KS2.EasySync.NoKS2CM
                     }
                     catch (Exception ex)
                     {
-                        logger.ErrorException("In MoveRepositoryFile", ex);
+                        logger.Error(ex, "In MoveRepositoryFile");
                         try { session.Clear(); }
                         catch { }
                         return ActionResult.Retry;
@@ -365,7 +365,7 @@ namespace KS2.EasySync.NoKS2CM
             }
             catch (DotCMIS.Exceptions.CmisObjectNotFoundException ex)
             {
-                logger.ErrorException("In MoveRepositoryFile", ex);
+                logger.Error(ex, "In MoveRepositoryFile");
                 logger.Error(ex.StackTrace);
                 logger.Error("Param pVirtualFile : " + Newtonsoft.Json.JsonConvert.SerializeObject(pVirtualFile));
                 logger.Error("Param SAI : " + Newtonsoft.Json.JsonConvert.SerializeObject(SAI));
@@ -373,7 +373,7 @@ namespace KS2.EasySync.NoKS2CM
             }
             catch (Exception ex)
             {
-                logger.ErrorException("In MoveRepositoryFile", ex);
+                logger.Error(ex, "In MoveRepositoryFile");
                 logger.Error(ex.StackTrace);
                 logger.Error("Param pVirtualFile : " + Newtonsoft.Json.JsonConvert.SerializeObject(pVirtualFile));
                 logger.Error("Param SAI : " + Newtonsoft.Json.JsonConvert.SerializeObject(SAI));
@@ -428,7 +428,7 @@ namespace KS2.EasySync.NoKS2CM
                     }
                     catch (DotCMIS.Exceptions.CmisObjectNotFoundException ex)
                     {
-                        logger.ErrorException("In MoveRenameRepositoryFile", ex);
+                        logger.Error(ex, "In MoveRenameRepositoryFile");
                         //Parent dos not exist anymore
                         try { session.Clear(); }
                         catch { }
@@ -436,7 +436,7 @@ namespace KS2.EasySync.NoKS2CM
                     }
                     catch (Exception ex)
                     {
-                        logger.ErrorException("In MoveRenameRepositoryFile", ex);
+                        logger.Error(ex, "In MoveRenameRepositoryFile");
                         try { session.Clear(); }
                         catch { }
                         return ActionResult.Retry;
@@ -484,7 +484,7 @@ namespace KS2.EasySync.NoKS2CM
             }
             catch (DotCMIS.Exceptions.CmisObjectNotFoundException ex)
             {
-                logger.ErrorException("In MoveRenameRepositoryFile", ex);
+                logger.Error(ex, "In MoveRenameRepositoryFile");
                 logger.Error(ex.StackTrace);
                 logger.Error("Param pVirtualFile : " + Newtonsoft.Json.JsonConvert.SerializeObject(pVirtualFile));
                 logger.Error("Param SAI : " + Newtonsoft.Json.JsonConvert.SerializeObject(SAI));
@@ -492,7 +492,7 @@ namespace KS2.EasySync.NoKS2CM
             }
             catch (Exception ex)
             {
-                logger.ErrorException("In MoveRenameRepositoryFile", ex);
+                logger.Error(ex, "In MoveRenameRepositoryFile");
                 logger.Error(ex.StackTrace);
                 logger.Error("Param pVirtualFile : " + Newtonsoft.Json.JsonConvert.SerializeObject(pVirtualFile));
                 logger.Error("Param SAI : " + Newtonsoft.Json.JsonConvert.SerializeObject(SAI));
@@ -537,7 +537,7 @@ namespace KS2.EasySync.NoKS2CM
             }
             catch (DotCMIS.Exceptions.CmisObjectNotFoundException ex)
             {
-                logger.ErrorException("In DeleteRepositoryFile", ex);
+                logger.Error(ex, "In DeleteRepositoryFile");
                 logger.Error(ex.StackTrace);
                 logger.Error("Param pVirtualFile : " + Newtonsoft.Json.JsonConvert.SerializeObject(pVirtualFile));
                 logger.Error("Param SAI : " + Newtonsoft.Json.JsonConvert.SerializeObject(SAI));
@@ -545,7 +545,7 @@ namespace KS2.EasySync.NoKS2CM
             }
             catch (Exception ex)
             {
-                logger.ErrorException("In DeleteRepositoryFile", ex);
+                logger.Error(ex, "In DeleteRepositoryFile");
                 logger.Error(ex.StackTrace);
                 logger.Error("Param pVirtualFile : " + Newtonsoft.Json.JsonConvert.SerializeObject(pVirtualFile));
                 logger.Error("Param SAI : " + Newtonsoft.Json.JsonConvert.SerializeObject(SAI));
@@ -632,7 +632,7 @@ namespace KS2.EasySync.NoKS2CM
                     }
                     catch (DotCMIS.Exceptions.CmisObjectNotFoundException ex)
                     {
-                        logger.ErrorException("In UploadVirtualFile", ex);
+                        logger.Error(ex, "In UploadVirtualFile");
                         //Parent dos not exist anymore
                         try { session.Clear(); }
                         catch { }
@@ -640,7 +640,7 @@ namespace KS2.EasySync.NoKS2CM
                     }
                     catch (Exception ex)
                     {
-                        logger.ErrorException("In UploadVirtualFile", ex);
+                        logger.Error(ex, "In UploadVirtualFile");
                         try { session.Clear(); }
                         catch { }
                         return ActionResult.Retry;
@@ -682,7 +682,7 @@ namespace KS2.EasySync.NoKS2CM
                     }
                     catch (Exception ex)
                     {
-                        logger.Error("In UploadVirtualFile", ex);
+                        logger.Error(ex, "In UploadVirtualFile");
                         logger.Error(ex.StackTrace);
                         logger.Error("Param pVirtualFile : " + Newtonsoft.Json.JsonConvert.SerializeObject(pVirtualFile));
                         logger.Error("Param SAI : " + Newtonsoft.Json.JsonConvert.SerializeObject(SAI));
@@ -730,7 +730,7 @@ namespace KS2.EasySync.NoKS2CM
                 }
                 catch (Exception ex)
                 {
-                    logger.Error("In UploadVirtualFile", ex);
+                    logger.Error(ex, "In UploadVirtualFile");
                     logger.Error(ex.StackTrace);
                     logger.Error("Param pVirtualFile : " + Newtonsoft.Json.JsonConvert.SerializeObject(pVirtualFile));
                     logger.Error("Param SAI : " + Newtonsoft.Json.JsonConvert.SerializeObject(SAI));
@@ -775,7 +775,7 @@ namespace KS2.EasySync.NoKS2CM
                 }
                 catch (Exception ex)
                 {
-                    logger.ErrorException("In UploadVirtualFile Existing", ex);
+                    logger.Error(ex, "In UploadVirtualFile Existing");
                     logger.Error(ex.StackTrace);
                     Log("UploadFile - Physical file is not available anymore. Another action will clean it");
                     try
@@ -796,7 +796,7 @@ namespace KS2.EasySync.NoKS2CM
                     }
                     catch (Exception ex)
                     {
-                        logger.Error("In UploadVirtualFile Existing", ex);
+                        logger.Error(ex, "In UploadVirtualFile Existing");
                         logger.Error(ex.StackTrace);
                         logger.Error("Param pVirtualFile : " + Newtonsoft.Json.JsonConvert.SerializeObject(pVirtualFile));
                         logger.Error("Param SAI : " + Newtonsoft.Json.JsonConvert.SerializeObject(SAI));
@@ -872,7 +872,7 @@ namespace KS2.EasySync.NoKS2CM
                                 }
                                 else
                                 {
-                                    logger.ErrorException("In UploadVirtualFile", ex);
+                                    logger.Error(ex, "In UploadVirtualFile");
                                     logger.Error(ex.StackTrace);
                                     logger.Error("Param pVirtualFile : " + Newtonsoft.Json.JsonConvert.SerializeObject(pVirtualFile));
                                     logger.Error("Param SAI : " + Newtonsoft.Json.JsonConvert.SerializeObject(SAI));
@@ -886,7 +886,7 @@ namespace KS2.EasySync.NoKS2CM
                             }
                             catch (Exception ex)
                             {
-                                logger.ErrorException("In UploadVirtualFile", ex);
+                                logger.Error(ex, "In UploadVirtualFile");
                                 logger.Error(ex.StackTrace);
                                 logger.Error("Param pVirtualFile : " + Newtonsoft.Json.JsonConvert.SerializeObject(pVirtualFile));
                                 logger.Error("Param SAI : " + Newtonsoft.Json.JsonConvert.SerializeObject(SAI));
@@ -913,7 +913,7 @@ namespace KS2.EasySync.NoKS2CM
                     }
                     catch (Exception ex)
                     {
-                        logger.Error("In UploadVirtualFile", ex);
+                        logger.Error(ex, "In UploadVirtualFile");
                         logger.Error(ex.StackTrace);
                         logger.Error("Param pVirtualFile : " + Newtonsoft.Json.JsonConvert.SerializeObject(pVirtualFile));
                         logger.Error("Param SAI : " + Newtonsoft.Json.JsonConvert.SerializeObject(SAI));
@@ -941,7 +941,7 @@ namespace KS2.EasySync.NoKS2CM
                     }
                     catch (Exception ex)
                     {
-                        logger.ErrorException("In UploadVirtualFile", ex);
+                        logger.Error(ex, "In UploadVirtualFile");
                         logger.Error(ex.StackTrace);
                         logger.Error("Param pVirtualFile : " + Newtonsoft.Json.JsonConvert.SerializeObject(pVirtualFile));
                         logger.Error("Param SAI : " + Newtonsoft.Json.JsonConvert.SerializeObject(SAI));
@@ -984,7 +984,7 @@ namespace KS2.EasySync.NoKS2CM
                     }
                     catch (Exception ex)
                     {
-                        logger.ErrorException("In UploadVirtualFile", ex);
+                        logger.Error(ex, "In UploadVirtualFile");
                         logger.Error(ex.StackTrace);
                         logger.Error("Param pVirtualFile : " + Newtonsoft.Json.JsonConvert.SerializeObject(pVirtualFile));
                         logger.Error("Param SAI : " + Newtonsoft.Json.JsonConvert.SerializeObject(SAI));
@@ -1014,13 +1014,13 @@ namespace KS2.EasySync.NoKS2CM
                 #endregion
             }
 
-        UploadVirtualFile_Success:
+            UploadVirtualFile_Success:
             _Host.VirtualFile_DeleteTemporaryCopy(pVirtualFile); //Try to clean the file
             return ActionResult.Success;
-        UploadVirtualFile_Retry:
+            UploadVirtualFile_Retry:
             _Host.VirtualFile_DeleteTemporaryCopy(pVirtualFile); //Try to clean the file
             return ActionResult.Retry;
-        UploadVirtualFile_Cancel:
+            UploadVirtualFile_Cancel:
             _Host.VirtualFile_DeleteTemporaryCopy(pVirtualFile); //Try to clean the file
             return ActionResult.Cancel;
         }
@@ -1200,7 +1200,7 @@ namespace KS2.EasySync.NoKS2CM
             }
             catch (Exception ex)
             {
-                logger.Error("In Download", ex);
+                logger.Error(ex, "In Download");
                 logger.Error(ex.StackTrace);
                 logger.Error("Param pVirtualFile : " + Newtonsoft.Json.JsonConvert.SerializeObject(pVirtualFile));
                 logger.Error("Param SAI : " + Newtonsoft.Json.JsonConvert.SerializeObject(SAI));
@@ -1237,7 +1237,7 @@ namespace KS2.EasySync.NoKS2CM
             }
             catch (Exception ex)
             {
-                logger.ErrorException("In CreateFolder", ex);
+                logger.Error(ex, "In CreateFolder");
                 logger.Error(ex.StackTrace);
                 logger.Error("Param pVirtualFolder : " + Newtonsoft.Json.JsonConvert.SerializeObject(pVirtualFolder));
                 logger.Error("Param SAI : " + Newtonsoft.Json.JsonConvert.SerializeObject(SAI));
@@ -1264,7 +1264,7 @@ namespace KS2.EasySync.NoKS2CM
         {
             //Compare local version to remote version. If remote version is higher, download the remote version
 
-            if (pVirtualFile.CustomProperties == null || pVirtualFile.CustomProperties.Equals(String.Empty)) 
+            if (pVirtualFile.CustomProperties == null || pVirtualFile.CustomProperties.Equals(String.Empty))
             {
                 return LocalAndRemoteComparisonResult.None;
             }
@@ -1324,7 +1324,7 @@ namespace KS2.EasySync.NoKS2CM
             }
             catch (Exception ex)
             {
-                logger.Error("In DeleteRepositoryFolder", ex);
+                logger.Error(ex, "In DeleteRepositoryFolder");
                 logger.Error(ex.StackTrace);
                 logger.Error("Param FolderToProcess : " + Newtonsoft.Json.JsonConvert.SerializeObject(FolderToProcess));
                 logger.Error("Param SAI : " + Newtonsoft.Json.JsonConvert.SerializeObject(SAI));
@@ -1345,7 +1345,7 @@ namespace KS2.EasySync.NoKS2CM
 
         public ActionResult RenameRepositoryFolder(VirtualFolder FolderToProcess, string NewName)
         {
-            if (session == null && !GetServiceSession(ref session, ref SiteDocumentLibraryFolderId) )return ActionResult.Retry;
+            if (session == null && !GetServiceSession(ref session, ref SiteDocumentLibraryFolderId)) return ActionResult.Retry;
 
             try
             {
@@ -1387,7 +1387,7 @@ namespace KS2.EasySync.NoKS2CM
             }
             catch (DotCMIS.Exceptions.CmisObjectNotFoundException ex)
             {
-                logger.ErrorException("In CreateFolder", ex);
+                logger.Error(ex, "In CreateFolder");
                 logger.Error(ex.StackTrace);
                 logger.Error("Param FolderToProcess : " + Newtonsoft.Json.JsonConvert.SerializeObject(FolderToProcess));
                 logger.Error("Param NewName : " + Newtonsoft.Json.JsonConvert.SerializeObject(NewName));
@@ -1395,7 +1395,7 @@ namespace KS2.EasySync.NoKS2CM
             }
             catch (Exception ex)
             {
-                logger.ErrorException("In CreateFolder", ex);
+                logger.Error(ex, "In CreateFolder");
                 logger.Error(ex.StackTrace);
                 logger.Error("Param FolderToProcess : " + Newtonsoft.Json.JsonConvert.SerializeObject(FolderToProcess));
                 logger.Error("Param NewName : " + Newtonsoft.Json.JsonConvert.SerializeObject(NewName));
@@ -1447,24 +1447,24 @@ namespace KS2.EasySync.NoKS2CM
                 RootFolder = (Folder)session.GetRootFolder();
                 Sites = (Folder)session.GetObjectByPath("/Sites");
 
-                    //Get the list of sites
-                    foreach (ICmisObject F in Sites.GetChildren())
-                    {
-                        TargetRepository.Add(F.Name);
-                    }
+                //Get the list of sites
+                foreach (ICmisObject F in Sites.GetChildren())
+                {
+                    TargetRepository.Add(F.Name);
+                }
 
                 IRepositoryCapabilities capa = Repo0.Capabilities;
             }
             catch (DotCMIS.Exceptions.CmisConnectionException ex)
             {
-                logger.ErrorException("In GetServiceSession", ex);
+                logger.Error(ex, "In GetServiceSession");
                 logger.Error(ex.Message);
                 logger.Error(ex.StackTrace);
                 return ActionResult.Cancel;
             }
             catch (Exception ex)
             {
-                logger.ErrorException("In GetServiceSession", ex);
+                logger.Error(ex, "In GetServiceSession");
                 logger.Error(ex.Message);
                 logger.Error(ex.StackTrace);
                 return ActionResult.Cancel;
@@ -1492,12 +1492,12 @@ namespace KS2.EasySync.NoKS2CM
 
             //ATOM
             //http://chemistry.apache.org/dotnet/session-parameters.html
-            
+
             parameters[DotCMIS.SessionParameter.BindingType] = BindingType.AtomPub;             // define binding type, in our example we are using ATOMPUB as stated above
             parameters[DotCMIS.SessionParameter.AtomPubUrl] = _ServiceURL/* + "/core/cmisatom"*/;   // define CMIS available path which is already available under alfresco
             parameters[DotCMIS.SessionParameter.User] = _Login;                                 // alfresco portal admin user name
             parameters[DotCMIS.SessionParameter.Password] = _Password;                          // alfresco portal admin password
-            
+
             /*
             parameters[DotCMIS.SessionParameter.BindingType] = BindingType.WebServices;     // define binding type, in our example we are using ATOMPUB as stated above
             parameters[DotCMIS.SessionParameter.User] = _Login;                         // alfresco portal admin user name
@@ -1544,22 +1544,22 @@ namespace KS2.EasySync.NoKS2CM
                 //Authentication error
                 logger.Error(ex.Message);
                 if (AuthenticationError != null) AuthenticationError(this, null);
-				return false;
+                return false;
             }
             catch (DotCMIS.Exceptions.CmisRuntimeException ex)
             {
-                logger.ErrorException("In GetServiceSession", ex);
+                logger.Error(ex, "In GetServiceSession");
                 logger.Error(ex.Message);
                 if (ex.Message.Equals("ConnectFailure"))
                 {
                     //Connection issue : check proxy parameters
                     if (ProxyError != null) ProxyError(this, null);
                 }
-				return false;
+                return false;
             }
             catch (Exception ex)
             {
-                logger.ErrorException("In GetServiceSession", ex);
+                logger.Error(ex, "In GetServiceSession");
                 logger.Error(ex.Message);
                 return false;
             }
@@ -1620,7 +1620,7 @@ namespace KS2.EasySync.NoKS2CM
             if (ElementId.LastIndexOf(';') != -1) return ElementId.Substring(0, ElementId.LastIndexOf(';'));
             else return ElementId;
         }
- 
+
         /// <summary>
         /// Build remote folder path
         /// </summary>
@@ -1657,7 +1657,7 @@ namespace KS2.EasySync.NoKS2CM
                 {
                     CurrentFolder = (Folder)session.GetObjectByPath(CurrentPath);
                 }
-                catch (Exception ex)
+                catch
                 {
                     //The folder does not exists
 
@@ -1744,9 +1744,9 @@ namespace KS2.EasySync.NoKS2CM
 
         private String GetMD5ForFile(ISession session, String FileNodeRef)
         {
-                return "";
+            return "";
         }
-        
+
         /// <summary>
         /// Check if the element has the KS2CM:Synchronizable attribute
         /// </summary>
@@ -1755,7 +1755,7 @@ namespace KS2.EasySync.NoKS2CM
         private bool IsKS2Synchronizable(ICmisObject SubF)
         {
             var Extensions = SubF.GetExtensions(ExtensionLevel.Properties);
-            for (int i = 0; i < Extensions.Count; i++ )
+            for (int i = 0; i < Extensions.Count; i++)
             {
                 for (int j = 0; j < Extensions[i].Children.Count; j++)
                 {
@@ -1822,7 +1822,7 @@ namespace KS2.EasySync.NoKS2CM
         [XmlElement("ROLE")]
         public String ROLE { get; set; }
     }
-    
+
     [Serializable]
     public class XMLCHILDS
     {

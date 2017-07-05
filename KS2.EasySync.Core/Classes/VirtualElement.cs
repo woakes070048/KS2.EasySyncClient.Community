@@ -595,7 +595,7 @@ namespace KS2.EasySync.Core
                 //Une action est en cours pour cet élément, on attand qu'elle termine (sauf si l'appelant est la tache elle-même)
                 Debug.WriteLine("Waiting for task completion " + _ProcessingTask.Id.ToString());
                 try { _ProcessingTask.Wait(); } //TODO-NTH : Could use a CancellationToken http://stackoverflow.com/questions/4783865/how-do-i-abort-cancel-tpl-tasks
-                catch (Exception ex) { }
+                catch { }
             }
             _IsDispatched = false;
             ErrorCount = 0;
@@ -710,7 +710,7 @@ namespace KS2.EasySync.Core
             {
                 FolderName = ElementPath.Substring(ElementPath.LastIndexOf(Path.DirectorySeparatorChar) + 1);
             }
-            catch (Exception ex)
+            catch
             {
                 FolderName = "";
             }

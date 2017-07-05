@@ -58,11 +58,11 @@ namespace KS2.EasySyncClient
         /// This final event is listened by the stat from when visible
         /// </summary>
         public static event EventHandler MainUploadDownloadCountChanged;
-        
+
         private static bool PromptNewSite = false;
         private static bool NewSiteActive = false;
         private static object NewSiteActiveLock = new object();
-        
+
         private static Int32 IconPosition = 0;
         private static NotifyIcon icn;
         private static ContextMenuStrip CxtMenu;
@@ -103,11 +103,11 @@ namespace KS2.EasySyncClient
 
             #endregion
 
-            #region Loading connectors (classes implementing KaliSyncPlugin.IKaliSyncPlugin)
+            #region Loading connectors (classes implementing KaliSyncPlugin.IEasySyncPlugin)
 
             logger.Trace("Looking for connectors ...");
 
-            const string qualifiedInterfaceName = "KS2.EasySync.Core.IKaliSyncPlugin";
+            const string qualifiedInterfaceName = "KS2.EasySync.Core.IEasySyncPlugin";
             var interfaceFilter = new TypeFilter(InterfaceFilter);
             var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
@@ -191,7 +191,7 @@ namespace KS2.EasySyncClient
                     oSQLHelper = new SQLiteHelper(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName + "." + System.Reflection.MethodBase.GetCurrentMethod().Name, null);
 
                     if (!oSQLHelper.InitConnection()) throw new Exception();
-                    
+
                     //Recreate structure
                     oSQLHelper.SetCommandText("CREATE TABLE Repository (Id_Repository INTEGER PRIMARY KEY AUTOINCREMENT, Name nvarchar(500), LocalRepository nvarchar(255), RemoteRepositoryConnector nvarchar(100), RemoteRepositoryParameters nvarchar(500))");
                     if (!oSQLHelper.ExecuteNonQuery()) throw new Exception();
@@ -216,7 +216,7 @@ namespace KS2.EasySyncClient
                 }
                 catch (Exception ex)
                 {
-                    logger.Error("Exception occured while creating database", ex);
+                    logger.Error(ex, "Exception occured while creating database");
                     goto QuitApplication;
                 }
                 finally
@@ -264,7 +264,7 @@ namespace KS2.EasySyncClient
             logger.Trace("Success");
 
             oSQLHelper = new SQLiteHelper(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName + "." + System.Reflection.MethodBase.GetCurrentMethod().Name, null);
-			if (!oSQLHelper.InitConnection ()) goto QuitApplication;
+            if (!oSQLHelper.InitConnection()) goto QuitApplication;
 
             #region Loading Repositories
 
@@ -360,7 +360,7 @@ namespace KS2.EasySyncClient
 
             Application.Run();
 
-    QuitApplication:
+            QuitApplication:
             if (icn != null) icn.Visible = false;
             mutex.ReleaseMutex();
         }
@@ -391,7 +391,7 @@ namespace KS2.EasySyncClient
         static void ForceQuitTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             StoppingDialog.AllowClosing = true;
-            
+
             if (StoppingDialog.InvokeRequired) StoppingDialog.Invoke(new MethodInvoker(delegate { StoppingDialog.Close(); }));
             else StoppingDialog.Close();
 
@@ -401,7 +401,7 @@ namespace KS2.EasySyncClient
 
         private static void Application_ThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)
         {
-            logger.Error("Application Wide Exception", e.Exception);
+            logger.Error(e.Exception, "Application Wide Exception");
         }
 
         #endregion
@@ -546,7 +546,7 @@ namespace KS2.EasySyncClient
 
         static void Menu_Log_Click(object sender, EventArgs e)
         {
-            Process.Start(Path.Combine(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),"LogView"),"logview.exe"), Path.Combine(Globals.GlbAppFolder, "EasySync.log"));
+            Process.Start(Path.Combine(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "LogView"), "logview.exe"), Path.Combine(Globals.GlbAppFolder, "EasySync.log"));
         }
 
         #endregion
@@ -632,21 +632,12 @@ namespace KS2.EasySyncClient
             if (IconPosition == 4) IconPosition = 0;
             if (icn != null) icn.Icon = ((System.Drawing.Icon)(KS2.EasySyncClient.Properties.Resources.ResourceManager.GetObject(String.Format("Anim{0}", IconPosition))));
         }
-        
+
         #endregion
-        
+
         private static bool InterfaceFilter(Type typeObj, Object criteriaObj)
         {
             return typeObj.ToString() == criteriaObj.ToString();
         }
-    }
-
-    public class UserToken
-    {
-        public String UserLogin { get; set; }
-        public String MachineName { get; set; }
-        public String ProductCode { get; set; }
-        public String ProductVersion { get; set; }
-        public String SystemVersion { get; set; }
     }
 }

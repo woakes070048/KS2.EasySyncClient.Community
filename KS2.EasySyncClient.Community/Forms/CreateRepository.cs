@@ -351,7 +351,7 @@ namespace KS2.EasySyncClient
 
         private bool GetRepositorySites(List<String> TargetRepositories, Type t, String URL, String Login, String Password)
 		{
-			var connector = (IKaliSyncPlugin)Activator.CreateInstance (t);
+			var connector = (IEasySyncPlugin)Activator.CreateInstance (t);
 			try {
                 connector.SetProxyParameter(Globals.GlbProxyMode, Globals.GlbProxyURL, Globals.GlbProxyAuthentication, Globals.GlbProxyLogin, Globals.GlbProxyPassword);
                 if (connector.Setup(URL, Login, Password, TargetRepositories) != ActionResult.Success)
@@ -359,7 +359,7 @@ namespace KS2.EasySyncClient
 					return false;
 				}
 
-			} catch (Exception ex) {
+			} catch {
 				return false;
 			}
 
